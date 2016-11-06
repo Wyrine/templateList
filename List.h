@@ -126,9 +126,15 @@ template <typename T>
 T  List<T>::removeFront() {
 	if (isEmpty()) return -1;
 	T temp = head->nodeItem;
-	head = head->next;
-	delete head->prev;
-	head->prev = NULL;
+	if(head->next != NULL){
+		head = head->next;
+		delete head->prev;
+		head->prev = NULL;
+	}
+	else{
+		delete head;
+		head = NULL;
+	}
 	size--;
 	return temp;
 }
@@ -137,17 +143,22 @@ template <typename T>
 void List<T>::printList() {
 	int i = 1;
 	for (Node<T>* current = head; current != NULL; current = current->next,  i++) {
-		std::cout << "Node " << i << " has the value: " << current->nodeItem << ".\n";
+		cout << "Node " << i << " has the value: " << current->nodeItem << ".\n";
 	}
 }
 
 template <typename T>
 List<T>::~List() {
-	if (isEmpty()) return;
-	do {
-		head = head->next;
-		delete head->prev;
-		head->prev = NULL;
-	} while (!isEmpty());
-	//head = head->next = NULL;
+	while (!isEmpty()){
+		if(head->next != NULL){
+			head = head->next;
+			delete head->prev;
+			head->prev = NULL;
+		}
+		else{
+			delete head;
+			head = NULL;
+		}
+		size--;
+	}
 }
