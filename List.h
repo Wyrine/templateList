@@ -152,12 +152,12 @@ List<T>::~List() {
 	while (!isEmpty()){
 		if(head->next != NULL){
 			head = head->next;
-			delete head->prev;
 			head->prev = NULL;
+			delete head->prev;		
 		}
 		else{
-			delete head;
 			head = NULL;
+			delete head;
 		}
 		size--;
 	}
